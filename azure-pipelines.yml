@@ -13,14 +13,15 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: SqlAzureDacpacDeployment@1
-                  inputs:
-                    azureSubscription: 'sc-azure-sql'
-                    AuthenticationType: 'server'
-                    ServerName: '$(AzureSQLServer)'
-                    DatabaseName: '$(AzureSQLDB)'
-                    SqlUsername: '$(AzureSQLAdmin)'
-                    SqlPassword: '$(AzureSQLAdminPass)'
-                    deployType: 'SqlTask'
-                    SqlFile: '$(Build.SourcesDirectory)/db-scripts/v1_create_table.sql'
-                    IpDetectionMethod: 'AutoDetect'
+              - checkout: self
+              - task: SqlAzureDacpacDeployment@1
+                inputs:
+                  azureSubscription: 'sc-azure-sql'
+                  AuthenticationType: 'server'
+                  ServerName: '$(AzureSQLServer)'
+                  DatabaseName: '$(AzureSQLDB)'
+                  SqlUsername: '$(AzureSQLAdmin)'
+                  SqlPassword: '$(AzureSQLAdminPass)'
+                  deployType: 'SqlTask'
+                  SqlFile: '$(Build.SourcesDirectory)/db-scripts/v1_create_table.sql'
+                  IpDetectionMethod: 'AutoDetect'
