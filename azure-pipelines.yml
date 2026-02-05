@@ -5,15 +5,25 @@ pool:
   vmImage: 'windows-latest'
 
 stages:
-  - stage: DeploySQLStage
-    jobs:
-      - deployment: SQLScriptDeployment
-        environment: 'Env-Project-15'
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-              - checkout: self
+- stage: PublishArtifacts
+  jobs:
+    - job: PublishJob
+      steps:
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.SourcesDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+
+
+- stage: DeploySQLStage
+  jobs:
+    - deployment: SQLScriptDeployment
+      environment: 'Env-Project-15'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
               - task: SqlAzureDacpacDeployment@1
                 inputs:
                   azureSubscription: 'sc-azure-sql'
@@ -23,5 +33,5 @@ stages:
                   SqlUsername: '$(AzureSQLAdmin)'
                   SqlPassword: '$(AzureSQLAdminPass)'
                   deployType: 'SqlTask'
-                  SqlFile: '$(Build.SourcesDirectory)/db-scripts/v1_create_table.sql'
+                  SqlFile: '$(Pipeline.Workspace)/db-scripts/v1_create_table.sql'
                   IpDetectionMethod: 'AutoDetect'
