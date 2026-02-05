@@ -33,5 +33,5 @@ stages:
                   SqlUsername: '$(AzureSQLAdmin)'
                   SqlPassword: '$(AzureSQLAdminPass)'
                   deployType: 'SqlTask'
-                  SqlFile: '$(Pipeline.Workspace)/drop/db-scripts/v1_create_table.sql'
+                  SqlFile: '$(Pipeline.Workspace)/drop/db-scripts/v1_create_tables.sql'
                   IpDetectionMethod: 'AutoDetect'
