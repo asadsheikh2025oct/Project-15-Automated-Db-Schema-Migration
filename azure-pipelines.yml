@@ -8,6 +8,7 @@ stages:
   - stage: DeploySQLStage
     jobs:
       - deployment: SQLScriptDeployment
+        environment: 'Env-Project-15'
         strategy:
           runOnce:
             deploy:
