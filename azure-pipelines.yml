@@ -8,6 +8,9 @@ trigger:
       - README.md
       - '*.png'
 
+variables:
+  - group: sql-secrets
+
 pool:
   vmImage: 'windows-latest'
 
