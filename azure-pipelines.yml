@@ -1,5 +1,12 @@
 trigger:
-- main
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - azure-pipelines.yml
+      - README.md
+      - '*.png'
 
 pool:
   vmImage: 'windows-latest'
@@ -17,6 +24,7 @@ stages:
 
 
 - stage: DeploySQLStage
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   jobs:
     - deployment: SQLScriptDeployment
       environment: 'Env-Project-15'
